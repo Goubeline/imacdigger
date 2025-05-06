@@ -1,0 +1,8 @@
+#.exe
+bin/
+
+#garbage
+build/
+
+#vs garbage
+.vs*/
