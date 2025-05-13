@@ -1,7 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <random>
-#include "bloc.hpp"
+#include "map_gen.hpp"
 
 const int width = 50;
 const int height = 50;
