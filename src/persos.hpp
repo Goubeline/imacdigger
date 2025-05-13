@@ -1,0 +1,32 @@
+#pragma once
+#include <array>
+
+enum Direction /*enum temporaire, en attendant la mise en commun*/
+{
+    Haut,
+    Bas,
+    Gauche,
+    Droite,
+    Immobile
+};
+
+struct Joueur
+{
+    std::array<double,2> position_xy{}; // position en float du joueur
+    std::array<int,2> position_grill{}; // numéro de la ligne et numéro de la colonne
+
+    Direction direction{}; // direction vers le prochain mouvement
+
+    bool verif_board() const; // verifie que x et y ne dépasse pas le bord du plateau
+
+    void position_to_grill(); // calcul position_grill à partir de position_xy
+
+    void deplacement(); //modifie la position en fonction de la direction
+};
+
+struct Ennnemi
+{
+    std::array<double,2> position_xy{}; // position en float du joueur
+    std::array<int,2> position_grill{}; // numéro de la ligne et numéro de la colonne
+
+};
