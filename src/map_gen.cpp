@@ -2,8 +2,6 @@
 #include "map_gen.hpp"
 #include "default_value.hpp"
 
-extern int MAP_HEIGHT;
-extern int MAP_WIDTH;
 const int iterations = 4;
 const float wall_probability = 0.5f;
 

@@ -1,18 +1,39 @@
 #include "bfs.hpp"
 
 #include <queue>
-#include <tuple>
 
-void bfs(std::vector<std::vector<Bloc>> carte, int startx, int starty)
+#include "default_value.hpp"
+
+bool inbound(int x, int y)
 {
-    std::tuple<int, int> origin = {startx, starty};
-    std::queue<std::tuple<int, int>> frontiere {};
+}
+
+void bfs(std::vector<std::vector<Bloc>>* map, int startx, int starty)
+{
+    std::pair<int, int> coordCurrent;
     Bloc current;
+    std::vector<int> visited (MAP_HEIGHT * MAP_WIDTH , -1);
+
+    std::queue<std::pair<int, int>> frontiere {};
+    std::pair<int, int> origin = {startx, starty};
     frontiere.push(origin);
-    std::vector<bool> visited (100 ,false);
+    visited[starty * MAP_WIDTH + startx] = 0;
 
     while(!frontiere.empty())
     {
-
+        coordCurrent = frontiere.front();
+        frontiere.pop();
+        for (int y = std::get<1>(coordCurrent) - 1; y <= std::get<1>(coordCurrent) + 1; y++)
+        {
+            for (int x = std::get<0>(coordCurrent) - 1; x <= std::get<0>(coordCurrent) + 1; x++)
+            {
+                if (visited[y * MAP_WIDTH + x] == -1 || )
+                {
+                    /* code */
+                }
+                
+            }
+        }
+        
     }
 }

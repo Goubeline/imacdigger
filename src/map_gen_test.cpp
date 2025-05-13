@@ -22,7 +22,7 @@ void printMap(const std::vector<std::vector<Bloc>>& map)
     }
 }
 
-int main()
+int test_map()
 {
     auto map = generateMap();
     printMap(map);

@@ -6,8 +6,6 @@ enum Types
 {
     Mur,
     Vide,
-    Trésor,
-    Piège
 };
 
 struct Bloc
@@ -15,4 +13,6 @@ struct Bloc
     Types type;
     int directionx;
     int directiony;
+    bool trap;
+    bool treasure;
 };
