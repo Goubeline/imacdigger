@@ -17,11 +17,9 @@ struct Joueur
 
     Direction direction{}; // direction vers le prochain mouvement
 
-    bool verif_board() const; // verifie que x et y ne dépasse pas le bord du plateau
+    bool verif_board() const; // verifie que x et y ne dépasse pas le bord du plateau : flase -> ils dépassent
 
     void position_to_grill(); // calcul position_grill à partir de position_xy
-
-    void deplacement(); //modifie la position en fonction de la direction
 };
 
 struct Ennnemi
