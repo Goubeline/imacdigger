@@ -13,5 +13,6 @@ enum Types
 struct Bloc
 {
     Types type;
-    std::vector<int, 2> direction;
+    int directionx;
+    int directiony;
 };
