@@ -1,9 +1,9 @@
-#include <iostream>
 #include <random>
 #include "map_gen.hpp"
+#include "default_value.hpp"
 
-const int width = 50;
-const int height = 50;
+extern int MAP_HEIGHT;
+extern int MAP_WIDTH;
 const int iterations = 4;
 const float wall_probability = 0.5f;
 
@@ -14,11 +14,11 @@ std::uniform_int_distribution<> dis(0, 1);
 // On initialise la carte avec des murs et des vides aléatoires
 std::vector<std::vector<Bloc>> initializeMap()
 {
-    std::vector<std::vector<Bloc>> map(height, std::vector<Bloc>(width));
+    std::vector<std::vector<Bloc>> map(MAP_HEIGHT, std::vector<Bloc>(MAP_WIDTH));
 
-    for (int y = 0; y < height; y++) 
+    for (int y = 0; y < MAP_HEIGHT; y++) 
     {
-        for (int x = 0; x < width; x++) 
+        for (int x = 0; x < MAP_WIDTH; x++) 
         {
             if (dis(gen) < wall_probability) 
             {
@@ -48,7 +48,7 @@ int countWallNeighbors(const std::vector<std::vector<Bloc>>& map, int x, int y)
             int ny = y + dy;
 
             // Si on est à l'extérieur de la carte, on considère comme un mur
-            if (nx < 0 || nx >= width || ny < 0 || ny >= height) 
+            if (nx < 0 || nx >= MAP_WIDTH || ny < 0 || ny >= MAP_HEIGHT) 
             {
                 wall_count++;
             } 
@@ -66,9 +66,9 @@ std::vector<std::vector<Bloc>> applyCellularAutomata(const std::vector<std::vect
 {
     std::vector<std::vector<Bloc>> new_map = map;
 
-    for (int y = 0; y < height; y++) 
+    for (int y = 0; y < MAP_HEIGHT; y++) 
     {
-        for (int x = 0; x < width; x++) 
+        for (int x = 0; x < MAP_WIDTH; x++) 
         {
             int walls = countWallNeighbors(map, x, y);
             if (map[y][x].type == Mur) 
@@ -116,32 +116,4 @@ std::vector<std::vector<Bloc>> generateMap()
     }
     
     return map;
-}
-
-// On affiche la carte dans le terminal pour tester
-void printMap(const std::vector<std::vector<Bloc>>& map)
-{
-    for (int y = 0; y < height; y++) 
-    {
-        for (int x = 0; x < width; x++) 
-        {
-            if (map[y][x].type == Mur) 
-            {
-                std::cout << "██"; // On représente un mur par un bloc Unicode plein (U+2588)
-            } 
-            else 
-            {
-                std::cout << "  ";  // On représente un vide par un espace
-            }
-        }
-        std::cout << std::endl;
-    }
-}
-
-int main()
-{
-    auto map = generateMap();
-    printMap(map);
-    
-    return 0;
 }
