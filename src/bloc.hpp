@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 enum Types
 {
     Mur,
@@ -11,5 +13,5 @@ enum Types
 struct Bloc
 {
     Types type;
-    Bloc* direction;
+    std::vector<int, 2> direction;
 };
