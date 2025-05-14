@@ -5,7 +5,7 @@
 enum Types
 {
     Mur,
-    Vide,
+    Vide
 };
 
 struct Bloc
