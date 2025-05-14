@@ -11,8 +11,8 @@ void printMap(const std::vector<std::vector<Bloc>>& map)
         {
             if (map[y][x].type == Mur)
             {
-                std::cout << "██"; // On représente un mur par deux blocs Unicode plein (U+2588)
-            } 
+                std::cout << "##"; // On représente un mur par deux hashtags
+            }
             else 
             {
                 std::cout << "  ";  // On représente un vide par deux espaces
