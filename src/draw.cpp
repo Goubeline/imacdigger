@@ -6,10 +6,15 @@
 #include "glbasimac/glbi_set_of_points.hpp"
 #include "glbasimac/glbi_convex_2D_shape.hpp"
 #include "default_value.hpp"
+#include "bloc.hpp"
+#include "map_gen.hpp"
 #include <iostream>
 #include <cmath>
 
 using namespace glbasimac;
+
+std::vector<float> Coords_bloc{-10,10,-9,10,-9,9,-10,9};
+GLBI_Convex_2D_Shape bloc {};
 
 /* Minimal time wanted between two images */
 static const double FRAMERATE_IN_SECONDS = 1. / 30.;
@@ -19,8 +24,15 @@ static float aspectRatio = 1.0f;
 GLBI_Engine myEngine;
 
 void initScene(){
+    bloc.initShape(Coords_bloc);
 }
+
+void draw_map(){
+    //à faire
+}
+
 void renderScene(){
+    //à faire
 }
 
 /* Error handling function */
@@ -31,7 +43,7 @@ void onError(int error, const char* description) {
 /* Espace virtuel */
 static const float GL_VIEW_SIZE = 20.;
 
-void onWindowResized(GLFWwindow* /*window*/, int width, int height){
+void onWindowResized(GLFWwindow* window, int width, int height){
 	aspectRatio = width / (float) height;
 	 glViewport(0, 0, width, height);
 	 if( aspectRatio > 1.0){
@@ -42,7 +54,7 @@ void onWindowResized(GLFWwindow* /*window*/, int width, int height){
 	}
 }
 
-void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*mods*/){
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
 	
 }
 
