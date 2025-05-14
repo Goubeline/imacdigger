@@ -13,6 +13,14 @@ void printMap(const std::vector<std::vector<Bloc>>& map)
             {
                 std::cout << "##"; // On représente un mur par deux hashtags
             }
+            else if (map[y][x].treasure)
+            {
+                std::cout << "TT"; // On représente un trésor par deux T
+            }
+            else if (map[y][x].trap)
+            {
+                std::cout << "!!"; // On représente un piège par deux !
+            }
             else 
             {
                 std::cout << "  ";  // On représente un vide par deux espaces

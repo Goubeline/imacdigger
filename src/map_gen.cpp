@@ -1,4 +1,7 @@
 #include <random>
+#include <algorithm>
+#include <ctime>
+#include <utility>
 #include "map_gen.hpp"
 #include "default_value.hpp"
 
@@ -104,6 +107,46 @@ std::vector<std::vector<Bloc>> applyCellularAutomata(const std::vector<std::vect
     return new_map;
 }
 
+// On ajoute des objets, pièges et ennemis sur la carte
+void populateMap(std::vector<std::vector<Bloc>>& map)
+{
+    // On liste les positions vides
+    std::vector<std::pair<int, int>> empty_positions;
+
+    for (int y = 0; y < MAP_HEIGHT; y++)
+    {
+        for (int x = 0; x < MAP_WIDTH; x++)
+        {
+            if (map[y][x].type == Vide)
+            {
+                empty_positions.emplace_back(y, x);
+            }
+        }
+    }
+
+    // On mélange les positions vides pour une distribution aléatoire
+    std::srand(std::time(nullptr));
+    std::shuffle(empty_positions.begin(), empty_positions.end(), gen);
+    
+    // On ajoute des trésors sur 5% des cases vides
+    int num_treasures = empty_positions.size() * 0.05;
+    for (int i = 0; i < num_treasures && !empty_positions.empty(); i++)
+    {
+        auto [y, x] = empty_positions.back();
+        empty_positions.pop_back();
+        map[y][x].treasure = true;
+    }
+
+    // On ajoute des pièges sur 3% des cases vides
+    int num_traps = empty_positions.size() * 0.03;
+    for (int i = 0; i < num_traps && !empty_positions.empty(); i++)
+    {
+        auto [y, x] = empty_positions.back();
+        empty_positions.pop_back();
+        map[y][x].trap = true;
+    }
+}
+
 // On génère la carte complète en appliquant plusieurs itérations de l'algo
 std::vector<std::vector<Bloc>> generateMap()
 {
@@ -112,6 +155,8 @@ std::vector<std::vector<Bloc>> generateMap()
     {
         map = applyCellularAutomata(map);
     }
+
+    populateMap(map);
     
     return map;
 }
