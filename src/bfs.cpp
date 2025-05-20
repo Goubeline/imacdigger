@@ -27,9 +27,9 @@ void find_flow(std::vector<std::vector<int>>& distances, std::vector<std::vector
     int min_dir_y;
     int min_dir_x;
 
-    for (int y = current_y - 1; y < current_y + 1; y++)
+    for (int y = current_y - 1; y <= current_y + 1; y++)
     {
-        for (int x = current_x - 1; x < current_x + 1; x++)
+        for (int x = current_x - 1; x <= current_x + 1; x++)
         {
             if (inbound(x, y))
             {
@@ -116,7 +116,7 @@ void flow_field(std::vector<std::vector<int>>& distances, std::vector<std::vecto
     }
 }
 
-void bfs(std::vector<std::vector<Bloc>>& map, int start_x, int start_y)
+void bfs_flow_field(std::vector<std::vector<Bloc>>& map, int start_x, int start_y)
 {
     std::vector<std::vector<int>> distances = dist_vec(map, start_x, start_y);
     std::pair<int, int> start = {start_x, start_y};

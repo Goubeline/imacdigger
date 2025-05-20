@@ -4,4 +4,5 @@
 
 #include <vector>
 
-void bfs(std::vector<std::vector<Bloc>> carte, int start_x, int start_y);
+void bfs_flow_field(std::vector<std::vector<Bloc>>& map, int start_x, int start_y);
+bool inbound(int x, int y);
