@@ -4,4 +4,4 @@
 
 #include <vector>
 
-void bfs(std::vector<std::vector<Bloc>> carte);
+void bfs(std::vector<std::vector<Bloc>> carte, int start_x, int start_y);
