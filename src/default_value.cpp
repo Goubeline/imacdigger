@@ -1,2 +1,2 @@
-int MAP_WIDTH = 20;
-int MAP_HEIGHT = 20;
+int MAP_WIDTH = 40;
+int MAP_HEIGHT = 40;

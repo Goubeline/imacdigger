@@ -1,6 +1,9 @@
 #include "map_gen_test.hpp"
+#include "map_gen.hpp"
+#include "draw.hpp"
 
 int main()
 {
-    test_map();
+    auto map = generateMap();
+    draw(map);
 }
