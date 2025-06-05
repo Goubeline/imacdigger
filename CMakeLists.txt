@@ -11,9 +11,22 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD
 # endif()
 
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS "src/*.cpp")
+
+# Retire end_screen_test.cpp de SRC_FILES
+list(REMOVE_ITEM SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/end_screen_test.cpp")
+
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 target_include_directories(${PROJECT_NAME} PRIVATE "src/")
+
+add_executable(test_end_screen src/end_screen_test.cpp src/end_screen.cpp)
+if(APPLE)
+    target_link_libraries(test_end_screen glfw "-framework OpenGL")
+elseif(WIN32)
+    target_link_libraries(test_end_screen glfw opengl32)
+else()
+    target_link_libraries(test_end_screen glfw GL)
+endif()
 
 # Librairies
 
