@@ -93,7 +93,7 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 					}
 					else if (map[y][x].trap)
 					{
-						myEngine.setFlatColor(0, 0, 0);
+						myEngine.setFlatColor(0.8, 0, 0);
 						bloc->draw();				
 					}
 					else
@@ -114,9 +114,10 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 }
 
 void draw_perso(){
+		myEngine.activateTexturing (true);
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.updateMvMatrix();
-	texture_perso(myEngine,player, bloc);
+	texture_perso(myEngine,player,bloc);
 	myEngine.mvMatrixStack.popMatrix();
 }
 
