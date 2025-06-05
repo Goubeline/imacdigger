@@ -150,6 +150,7 @@ void draw_ennemis (std::vector<std::pair<float, float>> ennemies){
 		myEngine.mvMatrixStack.addTranslation({ennemies[i].first,ennemies[i].second,0.});
 		myEngine.updateMvMatrix();
 		myEngine.setFlatColor(0.8,0.0,0.1);
+		bloc->draw();
 		myEngine.mvMatrixStack.popMatrix();
 	}
 }
