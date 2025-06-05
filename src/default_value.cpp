@@ -9,3 +9,4 @@ bool gagne = false;
 
 int num_treasures = 6;
 int trésor_obtenu = 0;
+
