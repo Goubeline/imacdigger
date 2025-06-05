@@ -87,23 +87,31 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 				if (map[y][x].type == Vide)
 				{
 					if (map[y][x].treasure)
-					{
-						myEngine.setFlatColor(0.8, 0.8, 0);
-						bloc->draw();						
+					{	
+						myEngine.activateTexturing (false);
+						myEngine.mvMatrixStack.pushMatrix();
+							myEngine.setFlatColor(0.8, 0.8, 0);
+							bloc->draw();
+						myEngine.mvMatrixStack.popMatrix();						
 					}
 					else if (map[y][x].trap)
-					{
-						myEngine.setFlatColor(0.8, 0, 0);
-						bloc->draw();				
+					{	
+						myEngine.activateTexturing (false);
+						myEngine.mvMatrixStack.pushMatrix();
+							myEngine.setFlatColor(1., 0., 0.);
+							bloc->draw();
+						myEngine.mvMatrixStack.popMatrix();			
 					}
 					else
-					{				
+					{	
+						//myEngine.activateTexturing (true);			
 						appli_Texture_sol(myEngine,bloc);
 					}
 				}
 				else
-					{texture = define_texture(map,x,y);
-					appli_Texture_pierre(myEngine,bloc,texture);}
+					//myEngine.activateTexturing (true);
+				 	{texture = define_texture(map,x,y);
+			 		appli_Texture_pierre(myEngine,bloc,texture);}
 
 			}
 			myEngine.mvMatrixStack.addTranslation({1, 0, 0});

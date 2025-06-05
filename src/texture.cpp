@@ -405,8 +405,10 @@ void appli_Texture_pierre (GLBI_Engine myEngine, StandardMesh* bloc, int texture
 }
 
 void texture_perso(GLBI_Engine myEngine,PlayerMove player,StandardMesh* bloc){
-    myEngine.activateTexturing(C_b1);
-    TP_b1.attachTexture();
+    // myEngine.activateTexturing(C_b1);
+    // TP_b1.attachTexture();
+    myEngine.activateTexturing(false);
+    myEngine.setFlatColor(0.,0.3,0.6);
     bloc->draw();
-    TP_b1.detachTexture();
+    // TP_b1.detachTexture();
 }
