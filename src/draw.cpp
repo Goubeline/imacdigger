@@ -21,7 +21,6 @@ static const double FRAMERATE_IN_SECONDS = 1. / 60.;
 static float aspectRatio = 1.0f;
 /* Espace virtuel */
 static const float GL_VIEW_SIZE = 22.;
-STP3D::Vector3D axe_Z {0.0,0.0,0.0};
 float vitesse_joueur = 3;
 
 const int original_height = 800;
@@ -34,8 +33,8 @@ float pos_joueur_y;
 GLBI_Engine myEngine;
 
 inline StandardMesh* Basic_Bloc(float x,float y) {
-		StandardMesh* bloc = new StandardMesh(4,GL_TRIANGLE_STRIP);
-		float coord[12] = {x/2.f,y/2.f,
+		StandardMesh* bloc = new StandardMesh(4,GL_TRIANGLE_FAN);
+		float coord[8] = {x/2.f,y/2.f,
 		                   x/2.f,-y/2.f,
 		                   -x/2.f,-y/2.f,
 		                   -x/2.f,y/2.f};
@@ -104,11 +103,15 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 				// 	myEngine.setFlatColor(0.6, 0, 0);
 				// bloc->draw();
 				if (map[y][x].type == Vide)
+				{
 					appli_Texture_sol(myEngine,bloc);
-				else{
+				}
+				else
+				{
 					texture = define_texture(map,x,y);
-					appli_Texture_pierre(myEngine,bloc,texture);}
-					
+					appli_Texture_pierre(myEngine,bloc,texture);
+				}
+
 			}
 			myEngine.mvMatrixStack.addTranslation({1, 0, 0});
 		}

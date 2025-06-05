@@ -18,11 +18,15 @@ GLBI_Texture myTextureH{}, myTexture0{}, myTexture1{}, myTexture2{}, myTexture3{
 
 
 void Textures(){
+    stbi_set_flip_vertically_on_load(true);
+
     myTextureH.createTexture();
     myTextureH.attachTexture();
 	myTextureH.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	int widthH, heightH, nrChannelsH;
-    H = stbi_load("../assets/textures/H.png", &widthH, &heightH, &nrChannelsH, 0);
+    H = stbi_load("../../assets/textures/H.png", &widthH, &heightH, &nrChannelsH, 0);
+    std::cout << "Image " << (H != nullptr ? "" : " not") << " loaded." << std::endl;
+
     myTextureH.loadImage(widthH, heightH, nrChannelsH, H);
     myTextureH.detachTexture();
 
@@ -30,7 +34,7 @@ void Textures(){
     myTexture0.attachTexture();
 	myTexture0.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	int width0, height0, nrChannels0;
-    P = stbi_load("../assets/textures/P_.png", &width0, &height0, &nrChannels0, 0);
+    P = stbi_load("../../assets/textures/P_.png", &width0, &height0, &nrChannels0, 0);
     myTexture0.loadImage(width0, height0, nrChannels0, P);
     myTexture0.detachTexture();
 
@@ -38,7 +42,7 @@ void Textures(){
     myTexture1.attachTexture();
 	myTexture1.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width1, height1, nrChannels1;
-    unsigned char* P_H = stbi_load("../assets/textures/P_h.png", &width1, &height1, &nrChannels1, 0);
+    unsigned char* P_H = stbi_load("../../assets/textures/P_h.png", &width1, &height1, &nrChannels1, 0);
     myTexture1.loadImage(width1, height1, nrChannels1, P_H);
     myTexture1.detachTexture();
 
@@ -46,7 +50,7 @@ void Textures(){
     myTexture2.attachTexture();
 	myTexture2.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width2, height2, nrChannels2;
-    unsigned char* P_G = stbi_load("../assets/textures/P_g.png", &width2, &height2, &nrChannels2, 0);
+    unsigned char* P_G = stbi_load("../../assets/textures/P_g.png", &width2, &height2, &nrChannels2, 0);
     myTexture2.loadImage(width2, height2, nrChannels2, P_G);
     myTexture2.detachTexture();
 
@@ -54,7 +58,7 @@ void Textures(){
     myTexture3.attachTexture();
 	myTexture3.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width3, height3, nrChannels3;
-    unsigned char* P_GH = stbi_load("../assets/textures/P_gh.png", &width3, &height3, &nrChannels3, 0);
+    unsigned char* P_GH = stbi_load("../../assets/textures/P_gh.png", &width3, &height3, &nrChannels3, 0);
     myTexture3.loadImage(width3, height3, nrChannels3, P_GH);
     myTexture3.detachTexture();
 
@@ -62,7 +66,7 @@ void Textures(){
     myTexture4.attachTexture();
 	myTexture4.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width4, height4, nrChannels4;
-    unsigned char* P_D = stbi_load("../assets/textures/P_d.png", &width4, &height4, &nrChannels4, 0);
+    unsigned char* P_D = stbi_load("../../assets/textures/P_d.png", &width4, &height4, &nrChannels4, 0);
     myTexture4.loadImage(width4, height4, nrChannels4, P_D);
     myTexture4.detachTexture();
 
@@ -70,7 +74,7 @@ void Textures(){
     myTexture5.attachTexture();
 	myTexture5.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width5, height5, nrChannels5;
-    unsigned char* P_DH = stbi_load("../assets/textures/P_dh.png", &width5, &height5, &nrChannels5, 0);
+    unsigned char* P_DH = stbi_load("../../assets/textures/P_dh.png", &width5, &height5, &nrChannels5, 0);
     myTexture5.loadImage(width5, height5, nrChannels5, P_DH);
     myTexture5.detachTexture();
 
@@ -78,7 +82,7 @@ void Textures(){
     myTexture6.attachTexture();
 	myTexture6.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width6, height6, nrChannels6;
-    unsigned char* P_DG = stbi_load("../assets/textures/P_dg.png", &width6, &height6, &nrChannels6, 0);
+    unsigned char* P_DG = stbi_load("../../assets/textures/P_dg.png", &width6, &height6, &nrChannels6, 0);
     myTexture6.loadImage(width6, height6, nrChannels6, P_DG);
     myTexture6.detachTexture();
 
@@ -86,7 +90,7 @@ void Textures(){
     myTexture7.attachTexture();
 	myTexture7.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width7, height7, nrChannels7;
-    unsigned char* P_DGH = stbi_load("../assets/textures/P_dgh.png", &width7, &height7, &nrChannels7, 0);
+    unsigned char* P_DGH = stbi_load("../../assets/textures/P_dgh.png", &width7, &height7, &nrChannels7, 0);
     myTexture7.loadImage(width7, height7, nrChannels7, P_DGH);
     myTexture7.detachTexture();
 
@@ -94,7 +98,7 @@ void Textures(){
     myTexture8.attachTexture();
 	myTexture8.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width8, height8, nrChannels8;
-    unsigned char* P_B = stbi_load("../assets/textures/P_b.png", &width8, &height8, &nrChannels8, 0);
+    unsigned char* P_B = stbi_load("../../assets/textures/P_b.png", &width8, &height8, &nrChannels8, 0);
     myTexture8.loadImage(width8, height8, nrChannels8, P_B);
     myTexture8.detachTexture();
 
@@ -102,7 +106,7 @@ void Textures(){
     myTexture9.attachTexture();
 	myTexture9.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width9, height9, nrChannels9;
-    unsigned char* P_BH = stbi_load("../assets/textures/P_bh.png", &width9, &height9, &nrChannels9, 0);
+    unsigned char* P_BH = stbi_load("../../assets/textures/P_bh.png", &width9, &height9, &nrChannels9, 0);
     myTexture9.loadImage(width9, height9, nrChannels9, P_BH);
     myTexture9.detachTexture();
 
@@ -110,7 +114,7 @@ void Textures(){
     myTexture10.attachTexture();
 	myTexture10.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width10, height10, nrChannels10;
-    unsigned char* P_BG = stbi_load("../assets/textures/P_bg.png", &width10, &height10, &nrChannels10, 0);
+    unsigned char* P_BG = stbi_load("../../assets/textures/P_bg.png", &width10, &height10, &nrChannels10, 0);
     myTexture10.loadImage(width10, height10, nrChannels10, P_BG);
     myTexture10.detachTexture();
 
@@ -118,7 +122,7 @@ void Textures(){
     myTexture11.attachTexture();
 	myTexture11.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width11, height11, nrChannels11;
-    unsigned char* P_BGH = stbi_load("../assets/textures/P_bgh.png", &width11, &height11, &nrChannels11, 0);
+    unsigned char* P_BGH = stbi_load("../../assets/textures/P_bgh.png", &width11, &height11, &nrChannels11, 0);
     myTexture11.loadImage(width11, height11, nrChannels11, P_BGH);
     myTexture11.detachTexture();
 
@@ -126,7 +130,7 @@ void Textures(){
     myTexture12.attachTexture();
 	myTexture12.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width12, height12, nrChannels12;
-    unsigned char* P_BD = stbi_load("../assets/textures/P_bd.png", &width12, &height12, &nrChannels12, 0);
+    unsigned char* P_BD = stbi_load("../../assets/textures/P_bd.png", &width12, &height12, &nrChannels12, 0);
     myTexture12.loadImage(width12, height12, nrChannels12, P_BD);
     myTexture12.detachTexture();
 
@@ -134,7 +138,7 @@ void Textures(){
     myTexture13.attachTexture();
 	myTexture13.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width13, height13, nrChannels13;
-    unsigned char* P_BDH = stbi_load("../assets/textures/P_bdh.png", &width13, &height13, &nrChannels13, 0);
+    unsigned char* P_BDH = stbi_load("../../assets/textures/P_bdh.png", &width13, &height13, &nrChannels13, 0);
     myTexture13.loadImage(width13, height13, nrChannels13, P_BDH);
     myTexture13.detachTexture();
 
@@ -142,7 +146,7 @@ void Textures(){
     myTexture14.attachTexture();
 	myTexture14.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width14, height14, nrChannels14;
-    unsigned char* P_BDG = stbi_load("../assets/textures/P_bdg.png", &width14, &height14, &nrChannels14, 0);
+    unsigned char* P_BDG = stbi_load("../../assets/textures/P_bdg.png", &width14, &height14, &nrChannels14, 0);
     myTexture14.loadImage(width14, height14, nrChannels14, P_BDG);
     myTexture14.detachTexture();
 
@@ -150,7 +154,7 @@ void Textures(){
     myTexture15.attachTexture();
 	myTexture15.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int width15, height15, nrChannels15;
-    unsigned char* P_BDGH = stbi_load("../assets/textures/P_bdgh.png", &width15, &height15, &nrChannels15, 0);
+    unsigned char* P_BDGH = stbi_load("../../assets/textures/P_bdgh.png", &width15, &height15, &nrChannels15, 0);
     myTexture15.loadImage(width15, height15, nrChannels15, P_BDGH);
     myTexture15.detachTexture();
 
@@ -223,8 +227,9 @@ int define_texture (std::vector<std::vector<Bloc>>& map,int x,int y){
 }
 
 void appli_Texture_sol (GLBI_Engine myEngine,StandardMesh* bloc){
-   myEngine.activateTexturing(myTextureH.id_in_GL);;
-	myTextureH.attachTexture();
+    myEngine.activateTexturing(myTextureH.id_in_GL);
+    myEngine.activateTexturing(true);
+    myTextureH.attachTexture();
 	bloc->draw();
 	myTextureH.detachTexture();
 }
