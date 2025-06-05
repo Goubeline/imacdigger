@@ -28,6 +28,8 @@ const int original_width = 800;
 
 float pos_joueur_x;
 float pos_joueur_y;
+int prec_pos_x;
+int prec_pos_y;
 
 /* OpenGL Engine */
 GLBI_Engine myEngine;
@@ -250,6 +252,13 @@ void deplacment(std::vector<std::vector<Bloc>>& map, double elapsedTime)
 		pos_joueur_y = (int)pos_joueur_y - 0.001;
 	}
 
+	if (prec_pos_x != (int)pos_joueur_x || prec_pos_y != (int)pos_joueur_y)
+	{
+		bfs_flow_field(map, prec_pos_x, prec_pos_y);
+		prec_pos_x = (int)pos_joueur_x;
+		prec_pos_y = (int)pos_joueur_y;
+	}
+	
 	// std::cout << pos_joueur_x << std::endl;
 }
 
@@ -289,6 +298,10 @@ int draw(std::vector<std::vector<Bloc>>& map) {
 
 	pos_joueur_x = MAP_WIDTH/2 + 0.5;
 	pos_joueur_y = MAP_HEIGHT/2 + 0.5;
+	prec_pos_x = (int)pos_joueur_x;
+	prec_pos_y = (int)pos_joueur_y;
+	bfs_flow_field(map, prec_pos_x, prec_pos_y);
+
 
 	onWindowResized(window, WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -337,7 +350,6 @@ int draw(std::vector<std::vector<Bloc>>& map) {
 		while (!glfwWindowShouldClose(window)) 
 		{
 			double startTime = glfwGetTime();
-			glClear(GL_COLOR_BUFFER_BIT);
 			// Teste la victoire ou la défaite (on change le paramètre pour tester)
 			displayEndScreen(Victoire); // ou Defaite
 
@@ -355,7 +367,6 @@ int draw(std::vector<std::vector<Bloc>>& map) {
 		while (!glfwWindowShouldClose(window)) 
 		{
 			double startTime = glfwGetTime();
-			glClear(GL_COLOR_BUFFER_BIT);
 			// Teste la victoire ou la défaite (on change le paramètre pour tester)
 			displayEndScreen(Defaite); // ou Defaite
 

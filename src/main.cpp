@@ -1,4 +1,3 @@
-#include "map_gen_test.hpp"
 #include "map_gen.hpp"
 #include "draw.hpp"
 
