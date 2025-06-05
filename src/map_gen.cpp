@@ -308,3 +308,25 @@ std::vector<std::vector<Bloc>> generateMap()
     
     return map;
 }
+
+// On retourne une position de départ valide
+std::pair<int, int> findValidStart(const std::vector<std::vector<Bloc>>& map)
+{
+    std::vector<std::pair<int, int>> valid_positions;
+    for (int y = 0; y < MAP_HEIGHT; y++)
+    {
+        for (int x = 0; x < MAP_WIDTH; x++)
+        {
+            const Bloc& b = map[y][x];
+            if (b.type == Vide && !b.trap && !b.treasure && !b.graal)
+            {
+                valid_positions.emplace_back(y, x);
+            }
+        }
+    }
+    // Tire au hasard une position valide
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::shuffle(valid_positions.begin(), valid_positions.end(), gen);
+    return valid_positions.front();
+}
