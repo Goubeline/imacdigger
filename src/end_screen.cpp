@@ -1,6 +1,5 @@
 #include "end_screen.hpp"
 #include <GLFW/glfw3.h>
-#include <iostream>
 #include "stb_easy_font.h"
 #include "default_value.hpp"
 
@@ -21,7 +20,8 @@ void drawText2D(const char* text, float x, float y, float r, float g, float b, f
 }
 
 // Dessine un bouton (rectangle + texte)
-void drawButton(float x, float y, float w, float h, const char* label, float r, float g, float b) {
+void drawButton(float x, float y, float w, float h, const char* label, float r, float g, float b)
+{
     // Rectangle du bouton
     glColor3f(r, g, b);
     glBegin(GL_QUADS);

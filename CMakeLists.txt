@@ -14,18 +14,29 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS "src/*.cpp")
 
 # Retire end_screen_test.cpp de SRC_FILES
 list(REMOVE_ITEM SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/end_screen_test.cpp")
+# Retire home_screen_test.cpp de SRC_FILES
+list(REMOVE_ITEM SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/home_screen_test.cpp")
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 target_include_directories(${PROJECT_NAME} PRIVATE "src/")
 
-add_executable(test_end_screen src/end_screen_test.cpp src/end_screen.cpp src/default_value.cpp)
+add_executable(end_screen_test src/end_screen_test.cpp src/end_screen.cpp src/default_value.cpp)
 if(APPLE)
-    target_link_libraries(test_end_screen glfw "-framework OpenGL")
+    target_link_libraries(end_screen_test glfw "-framework OpenGL")
 elseif(WIN32)
-    target_link_libraries(test_end_screen glfw opengl32)
+    target_link_libraries(end_screen_test glfw opengl32)
 else()
-    target_link_libraries(test_end_screen glfw GL)
+    target_link_libraries(end_screen_test glfw GL)
+endif()
+
+add_executable(home_screen_test src/home_screen_test.cpp src/home_screen.cpp src/end_screen.cpp src/default_value.cpp)
+if(APPLE)
+    target_link_libraries(home_screen_test glfw "-framework OpenGL")
+elseif(WIN32)
+    target_link_libraries(home_screen_test glfw opengl32)
+else()
+    target_link_libraries(home_screen_test glfw GL)
 endif()
 
 # Librairies
