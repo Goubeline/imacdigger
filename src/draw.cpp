@@ -139,7 +139,6 @@ void renderScene(std::vector<std::vector<Bloc>>& map){
 	myEngine.mvMatrixStack.loadIdentity();
 	draw_map(map);
 	myEngine.updateMvMatrix();
-	axis.drawSet();
 	// myEngine.setFlatColor(0.6, 0, 0);
 	// bloc.drawShape();
 	draw_perso();
@@ -241,10 +240,12 @@ void deplacment(std::vector<std::vector<Bloc>>& map, double elapsedTime)
 	else if(map[(int)pos_joueur_y][(int)(pos_joueur_x - 0.5)].type == Mur)
 	{
 		pos_joueur_x = (int)pos_joueur_x + 0.5;
+		map[(int)pos_joueur_y][(int)(pos_joueur_x - 0.5)].type = Vide;
 	}
 	else if(map[(int)pos_joueur_y][(int)(pos_joueur_x + 0.5)].type == Mur)
 	{
 		pos_joueur_x = (int)pos_joueur_x + 0.5;
+		map[(int)pos_joueur_y][(int)(pos_joueur_x + 0.5)].type = Vide;
 	}
 
 	pos_joueur_y += vitesse_joueur * elapsedTime * y * (std::abs(y) - std::abs(x) * 0.3);;
@@ -260,10 +261,12 @@ void deplacment(std::vector<std::vector<Bloc>>& map, double elapsedTime)
 	else if(map[(int)(pos_joueur_y - 1)][(int)pos_joueur_x].type == Mur)
 	{
 		pos_joueur_y = (int)pos_joueur_y + 0.99;
+		map[(int)(pos_joueur_y - 1)][(int)pos_joueur_x].type = Vide;
 	}
 	else if(map[(int)(pos_joueur_y)][(int)pos_joueur_x].type == Mur)
 	{
 		pos_joueur_y = (int)pos_joueur_y - 0.001;
+		map[(int)(pos_joueur_y)][(int)pos_joueur_x].type = Vide;
 	}
 
 	if (prec_pos_x != (int)pos_joueur_x || prec_pos_y != (int)pos_joueur_y)
