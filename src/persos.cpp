@@ -19,3 +19,4 @@ void Joueur::xy_to_grill(){
 void Ennemi::xy_to_grill(){
     position_grill= {static_cast<int>(std::floor(position_xy[0])),static_cast<int>(std::floor(position_xy[1])) };
 }
+

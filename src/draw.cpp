@@ -84,39 +84,39 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 			myEngine.updateMvMatrix();
 			if (inbound(x, y))
 			{
-				// if (map[y][x].type == Vide)
-				// {
-				// 	if (map[y][x].treasure)
-				// 	{
-				// 		myEngine.setFlatColor(0.8, 0.8, 0);						
-				// 	}
-				// 	else if (map[y][x].trap)
-				// 	{
-				// 		myEngine.setFlatColor(0, 0, 0);				
-				// 	}
-				// 	else
-				// 	{				
-				// 		myEngine.setFlatColor(0, 0.8, 0);
-				// 	}
-				// }
-				// else
-				// 	myEngine.setFlatColor(0.6, 0, 0);
-				// bloc->draw();
 				if (map[y][x].type == Vide)
 				{
-					appli_Texture_sol(myEngine,bloc);
+					if (map[y][x].treasure)
+					{
+						myEngine.setFlatColor(0.8, 0.8, 0);
+						bloc->draw();						
+					}
+					else if (map[y][x].trap)
+					{
+						myEngine.setFlatColor(0, 0, 0);
+						bloc->draw();				
+					}
+					else
+					{				
+						appli_Texture_sol(myEngine,bloc);
+					}
 				}
 				else
-				{
-					texture = define_texture(map,x,y);
-					appli_Texture_pierre(myEngine,bloc,texture);
-				}
+					{texture = define_texture(map,x,y);
+					appli_Texture_pierre(myEngine,bloc,texture);}
 
 			}
 			myEngine.mvMatrixStack.addTranslation({1, 0, 0});
 		}
 		myEngine.mvMatrixStack.addTranslation({- std::floor(GL_VIEW_SIZE) - 3, -1, 0});	
 	}
+	myEngine.mvMatrixStack.popMatrix();
+}
+
+void draw_perso(){
+	myEngine.mvMatrixStack.pushMatrix();
+	myEngine.updateMvMatrix();
+	texture_perso(myEngine,player, bloc);
 	myEngine.mvMatrixStack.popMatrix();
 }
 
@@ -127,6 +127,7 @@ void renderScene(std::vector<std::vector<Bloc>>& map){
 	axis.drawSet();
 	// myEngine.setFlatColor(0.6, 0, 0);
 	// bloc.drawShape();
+	draw_perso();
 }
 
 /* Error handling function */
