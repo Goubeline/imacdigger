@@ -126,8 +126,8 @@ void populateMap(std::vector<std::vector<Bloc>>& map)
     std::srand(std::time(nullptr));
     std::shuffle(empty_positions.begin(), empty_positions.end(), gen);
     
-    // On ajoute des trésors sur 3% des cases vides
-    int num_treasures = empty_positions.size() * 0.03;
+    // On ajoute des trésors sur 6 cases vides
+    int num_treasures = 6;
     for (int i = 0; i < num_treasures && !empty_positions.empty(); i++)
     {
         auto [y, x] = empty_positions.back();
