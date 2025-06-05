@@ -125,6 +125,14 @@ void populateMap(std::vector<std::vector<Bloc>>& map)
     // On mélange les positions vides pour une distribution aléatoire
     std::srand(std::time(nullptr));
     std::shuffle(empty_positions.begin(), empty_positions.end(), gen);
+
+    // On place le Graal sur une case vide
+    if (!empty_positions.empty()) 
+    {
+        auto [y, x] = empty_positions.back();
+        empty_positions.pop_back();
+        map[y][x].graal = true;
+    }
     
     // On ajoute des trésors sur 6 cases vides
     for (int i = 0; i < num_treasures && !empty_positions.empty(); i++)
