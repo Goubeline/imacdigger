@@ -4,8 +4,10 @@
 #include "default_value.hpp"
 #include "end_screen.hpp"
 #include "handle_events.hpp"
+#include "map_gen.hpp"
 #include <iostream>
 #include <cmath>
+#include <utility>
 
 PlayerMove player{};
 
@@ -28,7 +30,11 @@ const int original_width = 800;
 
 float pos_joueur_x;
 float pos_joueur_y;
+int prec_pos_x;
+int prec_pos_y;
 
+std::vector<std::pair<float, float>> ennemies{};
+int nb_ennemis = 6;
 /* OpenGL Engine */
 GLBI_Engine myEngine;
 
@@ -133,7 +139,6 @@ void renderScene(std::vector<std::vector<Bloc>>& map){
 	myEngine.mvMatrixStack.loadIdentity();
 	draw_map(map);
 	myEngine.updateMvMatrix();
-	axis.drawSet();
 	// myEngine.setFlatColor(0.6, 0, 0);
 	// bloc.drawShape();
 	draw_perso();
@@ -235,10 +240,12 @@ void deplacment(std::vector<std::vector<Bloc>>& map, double elapsedTime)
 	else if(map[(int)pos_joueur_y][(int)(pos_joueur_x - 0.5)].type == Mur)
 	{
 		pos_joueur_x = (int)pos_joueur_x + 0.5;
+		map[(int)pos_joueur_y][(int)(pos_joueur_x - 0.5)].type = Vide;
 	}
 	else if(map[(int)pos_joueur_y][(int)(pos_joueur_x + 0.5)].type == Mur)
 	{
 		pos_joueur_x = (int)pos_joueur_x + 0.5;
+		map[(int)pos_joueur_y][(int)(pos_joueur_x + 0.5)].type = Vide;
 	}
 
 	pos_joueur_y += vitesse_joueur * elapsedTime * y * (std::abs(y) - std::abs(x) * 0.3);;
@@ -254,14 +261,79 @@ void deplacment(std::vector<std::vector<Bloc>>& map, double elapsedTime)
 	else if(map[(int)(pos_joueur_y - 1)][(int)pos_joueur_x].type == Mur)
 	{
 		pos_joueur_y = (int)pos_joueur_y + 0.99;
+		map[(int)(pos_joueur_y - 1)][(int)pos_joueur_x].type = Vide;
 	}
 	else if(map[(int)(pos_joueur_y)][(int)pos_joueur_x].type == Mur)
 	{
 		pos_joueur_y = (int)pos_joueur_y - 0.001;
+		map[(int)(pos_joueur_y)][(int)pos_joueur_x].type = Vide;
 	}
 
+	if (prec_pos_x != (int)pos_joueur_x || prec_pos_y != (int)pos_joueur_y)
+	{
+		bfs_flow_field(map, prec_pos_x, prec_pos_y);
+		prec_pos_x = (int)pos_joueur_x;
+		prec_pos_y = (int)pos_joueur_y;
+	}
+	
 	// std::cout << pos_joueur_x << std::endl;
 }
+
+void mouvement_ennemi(std::vector<std::vector<Bloc>>& map, float elapsedTime)
+{
+	Bloc pos;
+	for (auto ennemi : ennemies)
+	{
+		pos = map[ennemi.first][ennemi.second];
+		if (pos.directionx != 0 && pos.directiony !=0)
+		{
+			ennemi.first += 0.5 * pos.directionx * vitesse_joueur * elapsedTime;
+			ennemi.second += 0.5 * pos.directiony * vitesse_joueur * elapsedTime;
+		}
+		else
+		{
+			ennemi.first += pos.directionx * vitesse_joueur * elapsedTime;
+			ennemi.second += pos.directiony* vitesse_joueur * elapsedTime;
+		}
+		if (ennemi.first < 0.5)
+		{
+			ennemi.first = 0.5;
+		}
+		else if (ennemi.first > map.size() - 0.5)
+		{
+			ennemi.first = map.size() - 0.5;
+		}
+		else if(map[(int)ennemi.second][(int)(ennemi.first - 0.5)].type == Mur)
+		{
+			ennemi.first = (int)ennemi.first + 0.5;
+		}
+		else if(map[(int)ennemi.second][(int)(ennemi.first + 0.5)].type == Mur)
+		{
+			ennemi.first = (int)ennemi.first + 0.5;
+		}
+	
+	
+		if (ennemi.second < 0.99)
+		{
+			ennemi.second = 0.99;
+		}
+		else if (ennemi.second > map.size())
+		{
+			ennemi.second = map.size();
+		}
+		else if(map[(int)(ennemi.second - 1)][(int)ennemi.first].type == Mur)
+		{
+			ennemi.second = (int)ennemi.second + 0.99;
+		}
+		else if(map[(int)(ennemi.second)][(int)ennemi.first].type == Mur)
+		{
+			ennemi.second = (int)ennemi.second - 0.001;
+		}
+
+	}
+	
+}
+
 
 int draw(std::vector<std::vector<Bloc>>& map) {
     // Initialize the library
@@ -299,6 +371,15 @@ int draw(std::vector<std::vector<Bloc>>& map) {
 
 	pos_joueur_x = MAP_WIDTH/2 + 0.5;
 	pos_joueur_y = MAP_HEIGHT/2 + 0.5;
+	prec_pos_x = (int)pos_joueur_x;
+	prec_pos_y = (int)pos_joueur_y;
+	bfs_flow_field(map, prec_pos_x, prec_pos_y);
+
+	for (size_t i = 0; i < nb_ennemis; i++)
+	{
+		ennemies.push_back(findValidStart(map));
+	}
+	
 
 	onWindowResized(window, WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -321,13 +402,13 @@ int draw(std::vector<std::vector<Bloc>>& map) {
 		// render here
 		deplacment(map, elapsedTime);
 		handle_events(map, pos_joueur_x, pos_joueur_y);
+
+		// mouvement_ennemi(map);
+		renderScene(map);
 		if (gagne || perdu)
 		{
 			break;
 		}
-		
-		renderScene(map);
-
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 		/* Poll for and process events */
@@ -347,7 +428,6 @@ int draw(std::vector<std::vector<Bloc>>& map) {
 		while (!glfwWindowShouldClose(window)) 
 		{
 			double startTime = glfwGetTime();
-			glClear(GL_COLOR_BUFFER_BIT);
 			// Teste la victoire ou la défaite (on change le paramètre pour tester)
 			displayEndScreen(Victoire); // ou Defaite
 
@@ -365,7 +445,6 @@ int draw(std::vector<std::vector<Bloc>>& map) {
 		while (!glfwWindowShouldClose(window)) 
 		{
 			double startTime = glfwGetTime();
-			glClear(GL_COLOR_BUFFER_BIT);
 			// Teste la victoire ou la défaite (on change le paramètre pour tester)
 			displayEndScreen(Defaite); // ou Defaite
 
