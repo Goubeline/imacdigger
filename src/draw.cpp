@@ -239,13 +239,13 @@ void deplacment(std::vector<std::vector<Bloc>>& map, double elapsedTime)
 	}
 	else if(map[(int)pos_joueur_y][(int)(pos_joueur_x - 0.5)].type == Mur)
 	{
-		pos_joueur_x = (int)pos_joueur_x + 0.5;
 		map[(int)pos_joueur_y][(int)(pos_joueur_x - 0.5)].type = Vide;
+		pos_joueur_x = (int)pos_joueur_x + 1;
 	}
 	else if(map[(int)pos_joueur_y][(int)(pos_joueur_x + 0.5)].type == Mur)
 	{
-		pos_joueur_x = (int)pos_joueur_x + 0.5;
 		map[(int)pos_joueur_y][(int)(pos_joueur_x + 0.5)].type = Vide;
+		pos_joueur_x = (int)pos_joueur_x + 0;
 	}
 
 	pos_joueur_y += vitesse_joueur * elapsedTime * y * (std::abs(y) - std::abs(x) * 0.3);;
@@ -260,13 +260,13 @@ void deplacment(std::vector<std::vector<Bloc>>& map, double elapsedTime)
 	}
 	else if(map[(int)(pos_joueur_y - 1)][(int)pos_joueur_x].type == Mur)
 	{
-		pos_joueur_y = (int)pos_joueur_y + 0.99;
 		map[(int)(pos_joueur_y - 1)][(int)pos_joueur_x].type = Vide;
+		pos_joueur_y = (int)pos_joueur_y + 1.3;
 	}
 	else if(map[(int)(pos_joueur_y)][(int)pos_joueur_x].type == Mur)
 	{
-		pos_joueur_y = (int)pos_joueur_y - 0.001;
 		map[(int)(pos_joueur_y)][(int)pos_joueur_x].type = Vide;
+		pos_joueur_y = (int)pos_joueur_y - 0.601;
 	}
 
 	if (prec_pos_x != (int)pos_joueur_x || prec_pos_y != (int)pos_joueur_y)
@@ -329,7 +329,7 @@ void mouvement_ennemi(std::vector<std::vector<Bloc>>& map, float elapsedTime)
 		{
 			ennemi.second = (int)ennemi.second - 0.001;
 		}
-
+		std::cout << ennemi.first << "; " << ennemi.second << std::endl;
 	}
 	
 }
@@ -401,6 +401,7 @@ int draw(std::vector<std::vector<Bloc>>& map) {
         
 		// render here
 		deplacment(map, elapsedTime);
+		mouvement_ennemi(map, elapsedTime);
 		handle_events(map, pos_joueur_x, pos_joueur_y);
 
 		// mouvement_ennemi(map);
