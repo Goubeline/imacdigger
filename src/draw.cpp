@@ -39,10 +39,10 @@ inline StandardMesh* Basic_Bloc(float x,float y) {
 		                   x/2.f,-y/2.f,
 		                   -x/2.f,-y/2.f,
 		                   -x/2.f,y/2.f};
-		float uvs_bloc[8] = {0.0,0.0,
-							0.0,1.0,
-							1.0,0.0,
-							1.0,1.0};
+		float uvs_bloc[8] = {0.0,1.0,
+							0.0,0.0,
+							1.0,1.0,
+							1.0,0.0};
 		bloc->addOneBuffer(0,2,coord,"coordinates",true);
 		bloc->addOneBuffer(2,2,uvs_bloc,"uvs", true);
 		return bloc;
@@ -85,30 +85,30 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 			myEngine.updateMvMatrix();
 			if (inbound(x, y))
 			{
-				if (map[y][x].type == Vide)
-				{
-					if (map[y][x].treasure)
-					{
-						myEngine.setFlatColor(0.8, 0.8, 0);						
-					}
-					else if (map[y][x].trap)
-					{
-						myEngine.setFlatColor(0, 0, 0);				
-					}
-					else
-					{				
-						myEngine.setFlatColor(0, 0.8, 0);
-					}
-				}
-				else
-					myEngine.setFlatColor(0.6, 0, 0);
-				bloc->draw();
 				// if (map[y][x].type == Vide)
-				// 	appli_Texture_sol(myEngine,bloc);
-				// else{
+				// {
+				// 	if (map[y][x].treasure)
+				// 	{
+				// 		myEngine.setFlatColor(0.8, 0.8, 0);						
+				// 	}
+				// 	else if (map[y][x].trap)
+				// 	{
+				// 		myEngine.setFlatColor(0, 0, 0);				
+				// 	}
+				// 	else
+				// 	{				
+				// 		myEngine.setFlatColor(0, 0.8, 0);
+				// 	}
 				// }
-				// 	appli_Texture_pierre(myEngine,bloc,texture);
-				// 	texture = define_texture(map,x,y);
+				// else
+				// 	myEngine.setFlatColor(0.6, 0, 0);
+				// bloc->draw();
+				if (map[y][x].type == Vide)
+					appli_Texture_sol(myEngine,bloc);
+				else{
+					texture = define_texture(map,x,y);
+					appli_Texture_pierre(myEngine,bloc,texture);}
+					
 			}
 			myEngine.mvMatrixStack.addTranslation({1, 0, 0});
 		}

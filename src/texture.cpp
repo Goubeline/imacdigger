@@ -181,16 +181,16 @@ std::array<bool,4> existences(std::vector<std::vector<Bloc>>& map,int x,int y){
     size_t max_x {map[0].size()};
     size_t max_y {map.size()};
     std::array<bool,4> existence {true, true,true, true};
-    if (y=max_y){
+    if (y==max_y){
         existence[0]=false;
     }
-    if (x=max_x){
+    if (x==max_x){
         existence[1]=false;
     }
-    if (x=0){
+    if (x==0){
         existence[2]=false;
     }
-    if (y=0){
+    if (y==0){
         existence[3]=false;
     }
     return existence;
@@ -200,22 +200,22 @@ int define_texture (std::vector<std::vector<Bloc>>& map,int x,int y){
     int value{0};
     std::array<bool,4> existence = existences(map, x, y);
     if (existence[0]){
-        if (map[y+1][x].type = Vide){
+        if (map[y+1][x].type == Vide){
             value+=8;
         }
     }
     if (existence[1]){
-        if (map[y][x+1].type = Vide){
+        if (map[y][x+1].type == Vide){
             value+=4;
         }
     }
     if (existence[2]){
-        if (map[y][x-1].type = Vide){
+        if (map[y][x-1].type == Vide){
             value+=2;
         }
     }
     if (existence[3]){
-        if (map[y-1][x].type = Vide){
+        if (map[y-1][x].type == Vide){
             value+=1;
         }
     }
@@ -223,7 +223,7 @@ int define_texture (std::vector<std::vector<Bloc>>& map,int x,int y){
 }
 
 void appli_Texture_sol (GLBI_Engine myEngine,StandardMesh* bloc){
-    myEngine.activateTexturing(H);
+   myEngine.activateTexturing(myTextureH.id_in_GL);;
 	myTextureH.attachTexture();
 	bloc->draw();
 	myTextureH.detachTexture();
