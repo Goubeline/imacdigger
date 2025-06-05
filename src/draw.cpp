@@ -25,9 +25,6 @@ float vitesse_joueur = 2;
 const int original_height = 800;
 const int original_width = 800;
 
-int WINDOW_WIDTH;
-int WINDOW_HEIGHT;
-
 float pos_joueur_x;
 float pos_joueur_y;
 

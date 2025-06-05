@@ -1,5 +1,6 @@
 #pragma once
 #define GLFW_INCLUDE_NONE
+#include "default_value.hpp"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "glbasimac/glbi_engine.hpp"
@@ -18,9 +19,6 @@ struct PlayerMove
     bool down;
     bool up;
 };
-
-extern int WINDOW_WIDTH;
-extern int WINDOW_HEIGHT;
 
 void initScene();
 void renderScene();

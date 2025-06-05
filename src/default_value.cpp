@@ -1,2 +1,5 @@
 int MAP_WIDTH = 40;
 int MAP_HEIGHT = 40;
+
+int WINDOW_WIDTH = 800;
+int WINDOW_HEIGHT = 800;
