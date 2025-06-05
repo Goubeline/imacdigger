@@ -5,17 +5,17 @@
 #include "tools/stb_image.h"
 #include "glbasimac/glbi_texture.hpp"
 #include "texture.hpp"
-
 #include "glbasimac/glbi_set_of_points.hpp"
-
 #include "tools/basic_mesh.hpp"
+#include "draw.hpp"
 
 
 using namespace glbasimac;
 
 unsigned char *H{},* P{},* P_H{},* P_G{},* P_GH{},* P_D{},* P_DH{},* P_DG{},* P_DGH{},* P_B{},* P_BH{},* P_BG{},* P_BGH{},* P_BD{},* P_BDH{},* P_BDG{},* P_BDGH{};
 GLBI_Texture myTextureH{}, myTexture0{}, myTexture1{}, myTexture2{}, myTexture3{}, myTexture4{}, myTexture5{}, myTexture6{}, myTexture7{}, myTexture8{}, myTexture9{}, myTexture10{}, myTexture11{}, myTexture12{}, myTexture13{}, myTexture14{}, myTexture15{};
-
+unsigned char* C_b1{},* C_b2{},* C_d1{},* C_d2{},* C_g1{},* C_g2{},* C_h1{},* C_h2{};
+GLBI_Texture TP_b1{},TP_b2{},TP_d1{},TP_d2{},TP_g1{},TP_g2{},TP_h1{},TP_h2{};
 
 void Textures(){
     stbi_set_flip_vertically_on_load(true);
@@ -158,7 +158,79 @@ void Textures(){
     myTexture15.loadImage(width15, height15, nrChannels15, P_BDGH);
     myTexture15.detachTexture();
 
+    TP_b1.createTexture();
+    TP_b1.attachTexture();
+	TP_b1.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    int wPb1, hPb1, nPb1;
+    unsigned char* C_b1 = stbi_load("../../assets/textures/chevalier_b1.png", &wPb1, &wPb1, &nPb1, 0);
+    TP_b1.loadImage(wPb1, hPb1, nPb1, C_b1);
+    TP_b1.detachTexture();
+
+    TP_b2.createTexture();
+    TP_b2.attachTexture();
+	TP_b2.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    int wPb2, hPb2, nPb2;
+    unsigned char* C_b2 = stbi_load("../../assets/textures/chevalier_b2.png", &wPb2, &wPb2, &nPb2, 0);
+    TP_b2.loadImage(wPb2, hPb2, nPb2, C_b2);
+    TP_b2.detachTexture();
+
+    TP_d1.createTexture();
+    TP_d1.attachTexture();
+	TP_d1.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    int wPd1, hPd1, nPd1;
+    unsigned char* C_d1 = stbi_load("../../assets/textures/chevalier_d1.png", &wPd1, &wPd1, &nPd1, 0);
+    TP_d1.loadImage(wPd1, hPd1, nPd1, C_d1);
+    TP_d1.detachTexture();
     
+    TP_d2.createTexture();
+    TP_d2.attachTexture();
+	TP_d2.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    int wPd2, hPd2, nPd2;
+    unsigned char* C_d2 = stbi_load("../../assets/textures/chevalier_d2.png", &wPd2, &wPd2, &nPd2, 0);
+    TP_d2.loadImage(wPd2, hPd2, nPd2, C_d2);
+    TP_d2.detachTexture();
+
+    TP_g1.createTexture();
+    TP_g1.attachTexture();
+	TP_g1.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    int wPg1, hPg1, nPg1;
+    unsigned char* C_g1 = stbi_load("../../assets/textures/chevalier_g1.png", &wPg1, &wPg1, &nPg1, 0);
+    TP_g1.loadImage(wPg1, hPg1, nPg1, C_g1);
+    TP_g1.detachTexture();
+
+    TP_g2.createTexture();
+    TP_g2.attachTexture();
+	TP_g2.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    int wPg2, hPg2, nPg2;
+    unsigned char* C_g2 = stbi_load("../../assets/textures/chevalier_g2.png", &wPg2, &wPg2, &nPg2, 0);
+    TP_g2.loadImage(wPg2, hPg2, nPg2, C_g2);
+    TP_g2.detachTexture();
+
+    TP_h1.createTexture();
+    TP_h1.attachTexture();
+	TP_h1.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    int wPh1, hPh1, nPh1;
+    unsigned char* C_h1 = stbi_load("../../assets/textures/chevalier_h1.png", &wPh1, &wPh1, &nPh1, 0);
+    TP_h1.loadImage(wPh1, hPh1, nPh1, C_h1);
+    TP_h1.detachTexture();
+
+    TP_h2.createTexture();
+    TP_h2.attachTexture();
+	TP_h2.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    int wPh2, hPh2, nPh2;
+    unsigned char* C_h2 = stbi_load("../../assets/textures/chevalier_h2.png", &wPh2, &wPh2, &nPh2, 0);
+    TP_h2.loadImage(wPh2, hPh2, nPh2, C_h2);
+    TP_h2.detachTexture();
+
+
+    stbi_image_free(C_b1);
+    stbi_image_free(C_b2);
+    stbi_image_free(C_d1);
+    stbi_image_free(C_d2);
+    stbi_image_free(C_g1);
+    stbi_image_free(C_g2);
+    stbi_image_free(C_h1);
+    stbi_image_free(C_h2);
     stbi_image_free(H);
 	stbi_image_free(P);
 	stbi_image_free(P_H);
@@ -234,92 +306,109 @@ void appli_Texture_sol (GLBI_Engine myEngine,StandardMesh* bloc){
 	myTextureH.detachTexture();
 }
 
-void appli_Texture_pierre (GLBI_Engine myEngine, StandardMesh* bloc, int texture){
-    myEngine.activateTexturing(liste[texture]);
-    switch (texture)
-    {
-    case 0:
-        myTexture0.attachTexture();
-        bloc->draw();
-        myTexture0.detachTexture();
-        break;
-    case 1:
-        myTexture1.attachTexture();
-        bloc->draw();
-        myTexture1.detachTexture();
-        break;
-    case 2:
-        myTexture2.attachTexture();
-        bloc->draw();
-        myTexture2.detachTexture();
-        break;
-    case 3:
-        myTexture3.attachTexture();
-        bloc->draw();
-        myTexture3.detachTexture();
-        break;
-    case 4:
-        myTexture4.attachTexture();
-        bloc->draw();
-        myTexture4.detachTexture();
-        break;
-    case 5:
-        myTexture5.attachTexture();
-        bloc->draw();
-        myTexture5.detachTexture();
-        break;
-    case 6:
-        myTexture6.attachTexture();
-        bloc->draw();
-        myTexture6.detachTexture();
-        break;
-    case 7:
-        myTexture7.attachTexture();
-        bloc->draw();
-        myTexture7.detachTexture();
-        break;
-    case 8:
-        myTexture8.attachTexture();
-        bloc->draw();
-        myTexture8.detachTexture();
-        break;
-    case 10:
-        myTexture10.attachTexture();
-        bloc->draw();
-        myTexture10.detachTexture();
-        break;
-    case 11:
-        myTexture11.attachTexture();
-        bloc->draw();
-        myTexture11.detachTexture();
-        break;
-    case 12:
-        myTexture12.attachTexture();
-        bloc->draw();
-        myTexture12.detachTexture();
-        break;
-    case 13:
-        myTexture13.attachTexture();
-        bloc->draw();
-        myTexture13.detachTexture();
-        break;
-    case 14:
-        myTexture14.attachTexture();
-        bloc->draw();
-        myTexture14.detachTexture();
-        break;
-    case 15:
-        myTexture15.attachTexture();
-        bloc->draw();
-        myTexture15.detachTexture();
-        break;
+// void appli_Texture_pierre (GLBI_Engine myEngine, StandardMesh* bloc, int texture){
+//     myEngine.activateTexturing(liste[texture]);
+//     switch (texture)
+//     {
+//     case 0:
+//         myTexture0.attachTexture();
+//         bloc->draw();
+//         myTexture0.detachTexture();
+//         break;
+//     case 1:
+//         myTexture1.attachTexture();
+//         bloc->draw();
+//         myTexture1.detachTexture();
+//         break;
+//     case 2:
+//         myTexture2.attachTexture();
+//         bloc->draw();
+//         myTexture2.detachTexture();
+//         break;
+//     case 3:
+//         myTexture3.attachTexture();
+//         bloc->draw();
+//         myTexture3.detachTexture();
+//         break;
+//     case 4:
+//         myTexture4.attachTexture();
+//         bloc->draw();
+//         myTexture4.detachTexture();
+//         break;
+//     case 5:
+//         myTexture5.attachTexture();
+//         bloc->draw();
+//         myTexture5.detachTexture();
+//         break;
+//     case 6:
+//         myTexture6.attachTexture();
+//         bloc->draw();
+//         myTexture6.detachTexture();
+//         break;
+//     case 7:
+//         myTexture7.attachTexture();
+//         bloc->draw();
+//         myTexture7.detachTexture();
+//         break;
+//     case 8:
+//         myTexture8.attachTexture();
+//         bloc->draw();
+//         myTexture8.detachTexture();
+//         break;
+//     case 10:
+//         myTexture10.attachTexture();
+//         bloc->draw();
+//         myTexture10.detachTexture();
+//         break;
+//     case 11:
+//         myTexture11.attachTexture();
+//         bloc->draw();
+//         myTexture11.detachTexture();
+//         break;
+//     case 12:
+//         myTexture12.attachTexture();
+//         bloc->draw();
+//         myTexture12.detachTexture();
+//         break;
+//     case 13:
+//         myTexture13.attachTexture();
+//         bloc->draw();
+//         myTexture13.detachTexture();
+//         break;
+//     case 14:
+//         myTexture14.attachTexture();
+//         bloc->draw();
+//         myTexture14.detachTexture();
+//         break;
+//     case 15:
+//         myTexture15.attachTexture();
+//         bloc->draw();
+//         myTexture15.detachTexture();
+//         break;
 
-    default:
-        myEngine.activateTexturing(P);
-        myTexture0.attachTexture();
-        bloc->draw();
-        myTexture0.detachTexture();
-        break;
-    }
+//     default:
+//         myEngine.activateTexturing(P);
+//         myTexture0.attachTexture();
+//         bloc->draw();
+//         myTexture0.detachTexture();
+//         break;
+//     }
+// }
+
+void appli_Texture_pierre (GLBI_Engine myEngine, StandardMesh* bloc, int texture){
+    myEngine.activateTexturing(P);
+   
+    myTexture0.attachTexture();
+    bloc->draw();
+    myTexture0.detachTexture();
+        
 }
 
+void texture_perso(GLBI_Engine myEngine,PlayerMove player,StandardMesh* bloc){
+    // myEngine.activateTexturing(C_b1);
+    // TP_b1.attachTexture();
+    myEngine.activateTexturing(false);
+    myEngine.setFlatColor(0.,0.3,0.6);
+    bloc->draw();
+    // TP_b1.detachTexture();
+}
