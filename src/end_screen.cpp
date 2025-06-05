@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "stb_easy_font.h"
+#include "default_value.hpp"
 
 void drawText2D(const char* text, float x, float y, float r, float g, float b, float scale = 2.5f)
 {
@@ -46,7 +47,7 @@ void displayEndScreen(EndType type)
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    int width = 800, height = 800;
+    int width = WINDOW_WIDTH, height = WINDOW_HEIGHT;
     glOrtho(0, width, height, 0, -1, 1);
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();

@@ -19,7 +19,7 @@ add_executable(${PROJECT_NAME} ${SRC_FILES})
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 target_include_directories(${PROJECT_NAME} PRIVATE "src/")
 
-add_executable(test_end_screen src/end_screen_test.cpp src/end_screen.cpp)
+add_executable(test_end_screen src/end_screen_test.cpp src/end_screen.cpp src/default_value.cpp)
 if(APPLE)
     target_link_libraries(test_end_screen glfw "-framework OpenGL")
 elseif(WIN32)

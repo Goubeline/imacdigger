@@ -20,7 +20,7 @@ int main()
     while (!glfwWindowShouldClose(window)) 
     {
         // Teste la victoire ou la défaite (on change le paramètre pour tester)
-        displayEndScreen(Defaite); // ou Defaite
+        displayEndScreen(Victoire); // ou Defaite
 
         glfwSwapBuffers(window);
         glfwPollEvents();
