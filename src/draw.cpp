@@ -22,7 +22,7 @@ GLBI_Set_Of_Points axis;
 static const double FRAMERATE_IN_SECONDS = 1. / 60.;
 static float aspectRatio = 1.0f;
 /* Espace virtuel */
-static const float GL_VIEW_SIZE = 22.;
+static const float GL_VIEW_SIZE = 44.;
 float vitesse_joueur = 3;
 
 const int original_height = 800;
@@ -108,6 +108,14 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 							bloc->draw();
 						myEngine.mvMatrixStack.popMatrix();			
 					}
+					else if (map[y][x].graal)
+					{	
+						myEngine.activateTexturing (false);
+						myEngine.mvMatrixStack.pushMatrix();
+							myEngine.setFlatColor(1., 0.5, 0.);
+							bloc->draw();
+						myEngine.mvMatrixStack.popMatrix();			
+					}
 					else
 					{	
 						//myEngine.activateTexturing (true);			
@@ -128,11 +136,22 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 }
 
 void draw_perso(){
-		myEngine.activateTexturing (true);
+		//myEngine.activateTexturing (true);
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.updateMvMatrix();
 	texture_perso(myEngine,player,bloc);
 	myEngine.mvMatrixStack.popMatrix();
+}
+
+void draw_ennemis (std::vector<std::pair<float, float>> ennemies){
+	for (int i{0};i<nb_ennemis;i++){
+		myEngine.activateTexturing (false);
+		myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({ennemies[i].first,ennemies[i].second,0.});
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(0.8,0.0,0.1);
+		myEngine.mvMatrixStack.popMatrix();
+	}
 }
 
 void renderScene(std::vector<std::vector<Bloc>>& map){
@@ -142,6 +161,7 @@ void renderScene(std::vector<std::vector<Bloc>>& map){
 	// myEngine.setFlatColor(0.6, 0, 0);
 	// bloc.drawShape();
 	draw_perso();
+	draw_ennemis(ennemies);
 }
 
 /* Error handling function */
