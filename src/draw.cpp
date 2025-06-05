@@ -1,5 +1,5 @@
 #include "draw.hpp"
-
+#include "texture.hpp"
 #include "bfs.hpp"
 #include "default_value.hpp"
 #include <iostream>
@@ -9,15 +9,17 @@ PlayerMove player{};
 
 using namespace glbasimac;
 
-std::vector<float> Coords_bloc{0.5,0.5,0.5,-0.5,-0.5,-0.5,-0.5,0.5};
-GLBI_Convex_2D_Shape bloc {};
+//std::vector<float> Coords_bloc{0.5,0.5,0.5,-0.5,-0.5,-0.5,-0.5,0.5};
+//GLBI_Convex_2D_Shape bloc {};
+StandardMesh* bloc{};
 GLBI_Set_Of_Points axis;
 
 /* Minimal time wanted between two images */
 static const double FRAMERATE_IN_SECONDS = 1. / 60.;
 static float aspectRatio = 1.0f;
 /* Espace virtuel */
-static const float GL_VIEW_SIZE = 44.;
+static const float GL_VIEW_SIZE = 22.;
+STP3D::Vector3D axe_Z {0.0,0.0,0.0};
 float vitesse_joueur = 2;
 
 const int original_height = 800;
@@ -32,6 +34,21 @@ float pos_joueur_y;
 /* OpenGL Engine */
 GLBI_Engine myEngine;
 
+inline StandardMesh* Basic_Bloc(float x,float y) {
+		StandardMesh* bloc = new StandardMesh(4,GL_TRIANGLE_STRIP);
+		float coord[12] = {x/2.f,y/2.f,
+		                   x/2.f,-y/2.f,
+		                   -x/2.f,-y/2.f,
+		                   -x/2.f,y/2.f};
+		float uvs_bloc[8] = {0.0,0.0,
+							0.0,1.0,
+							1.0,0.0,
+							1.0,1.0};
+		bloc->addOneBuffer(0,2,coord,"coordinates",true);
+		bloc->addOneBuffer(2,2,uvs_bloc,"uvs", true);
+		return bloc;
+}
+
 void initScene(){
 	std::vector<float> coords = {-GL_VIEW_SIZE/2, 0};
 	float pointC[] = {0, -GL_VIEW_SIZE/2};
@@ -44,21 +61,24 @@ void initScene(){
 	axis.addAPoint(pointB, whiteTable);
 	axis.addAPoint(pointC, whiteTable);
 	axis.changeNature(GL_LINES);
+	Textures();
 
-
-    bloc.initShape(Coords_bloc);
+    //bloc.initShape(Coords_bloc);
+	bloc = Basic_Bloc(1.0,1.0);
+	bloc->createVAO();
 	myEngine.updateMvMatrix();
-	bloc.changeNature(GL_TRIANGLE_FAN);
+	bloc->changeType(GL_TRIANGLE_FAN);
 }
 
 void draw_map(std::vector<std::vector<Bloc>>& map)
 {
+	//myEngine.activateTexturing (false);
 	float frac_x, whole_x, frac_y, whole_y;
 	frac_x = std::modf(pos_joueur_x, &whole_x);
 	frac_y = std::modf(pos_joueur_y, &whole_y);
-
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation({-GL_VIEW_SIZE / 2 - frac_x - 0.5, GL_VIEW_SIZE / 2 + frac_y + 0.5, 0});
+	int texture;
     for (int y = whole_y - GL_VIEW_SIZE / 2 - 1; y <= whole_y + GL_VIEW_SIZE / 2 + 1; y++)
 	{
 		for (int x = whole_x - GL_VIEW_SIZE / 2 - 1; x <= whole_x + GL_VIEW_SIZE / 2 + 1; x++)
@@ -83,7 +103,13 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 				}
 				else
 					myEngine.setFlatColor(0.6, 0, 0);
-				bloc.drawShape();
+				bloc->draw();
+				// if (map[y][x].type == Vide)
+				// 	appli_Texture_sol(myEngine,bloc);
+				// else{
+				// }
+				// 	appli_Texture_pierre(myEngine,bloc,texture);
+				// 	texture = define_texture(map,x,y);
 			}
 			myEngine.mvMatrixStack.addTranslation({1, 0, 0});
 		}
@@ -286,6 +312,8 @@ int draw(std::vector<std::vector<Bloc>>& map) {
 	onWindowResized(window, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	initScene();
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	/* Loop until the user closes the window */
 	player.left = false;
