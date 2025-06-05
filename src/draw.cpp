@@ -108,6 +108,14 @@ void draw_map(std::vector<std::vector<Bloc>>& map)
 							bloc->draw();
 						myEngine.mvMatrixStack.popMatrix();			
 					}
+					else if (map[y][x].graal)
+					{	
+						myEngine.activateTexturing (false);
+						myEngine.mvMatrixStack.pushMatrix();
+							myEngine.setFlatColor(1., 0.5, 0.);
+							bloc->draw();
+						myEngine.mvMatrixStack.popMatrix();	
+					}
 					else
 					{	
 						//myEngine.activateTexturing (true);			
@@ -329,7 +337,12 @@ void mouvement_ennemi(std::vector<std::vector<Bloc>>& map, float elapsedTime)
 		{
 			ennemi.second = (int)ennemi.second - 0.001;
 		}
-		std::cout << ennemi.first << "; " << ennemi.second << std::endl;
+
+		if ((int)ennemi.first == (int)pos_joueur_x && (int)ennemi.second == (int)pos_joueur_y)
+		{
+			perdu =true;
+		}
+		
 	}
 	
 }
