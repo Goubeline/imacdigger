@@ -11,6 +11,14 @@
 
 using namespace glbasimac;
 
+struct PlayerMove
+{
+    bool left;
+    bool right;
+    bool down;
+    bool up;
+};
+
 void initScene();
 void renderScene();
 
