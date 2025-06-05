@@ -11,3 +11,6 @@ extern bool gagne;
 
 extern int trésor_obtenu;
 extern int num_treasures;
+
+extern float pos_joueur_x;
+extern float pos_joueur_y;
