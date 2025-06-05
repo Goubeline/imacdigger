@@ -135,8 +135,8 @@ void populateMap(std::vector<std::vector<Bloc>>& map)
         map[y][x].treasure = true;
     }
 
-    // On ajoute des pièges sur 2% des cases vides
-    int num_traps = empty_positions.size() * 0.02;
+    // On ajoute des pièges sur 6 cases vides
+    int num_traps = 6;
     for (int i = 0; i < num_traps && !empty_positions.empty(); i++)
     {
         auto [y, x] = empty_positions.back();
