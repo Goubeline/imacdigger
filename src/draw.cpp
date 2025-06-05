@@ -2,6 +2,8 @@
 #include "texture.hpp"
 #include "bfs.hpp"
 #include "default_value.hpp"
+#include "end_screen.hpp"
+#include "handle_events.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -20,7 +22,7 @@ static float aspectRatio = 1.0f;
 /* Espace virtuel */
 static const float GL_VIEW_SIZE = 22.;
 STP3D::Vector3D axe_Z {0.0,0.0,0.0};
-float vitesse_joueur = 2;
+float vitesse_joueur = 3;
 
 const int original_height = 800;
 const int original_width = 800;
@@ -150,33 +152,31 @@ void onWindowResized(GLFWwindow* /*window*/, int width, int height)
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
-	std::cout << player.left << std::endl;
 	switch (key)
 	{
 	case GLFW_KEY_A:
-		if (action == GLFW_PRESS || action == GLFW_REPEAT)
-		{
+		if (action == GLFW_PRESS)
 			player.left = true;
-
-		}
+		if (action == GLFW_RELEASE)
+			player.left = false;		
 		break;
 	case GLFW_KEY_D:
-		if (action == GLFW_PRESS || action == GLFW_REPEAT)
-		{
+		if (action == GLFW_PRESS)
 			player.right = true;
-		}
+		if (action == GLFW_RELEASE)
+			player.right = false;
 		break;
 	case GLFW_KEY_W:
-		if (action == GLFW_PRESS || action == GLFW_REPEAT)
-		{
+		if (action == GLFW_PRESS)
 			player.up = true;
-		}
+		if (action == GLFW_RELEASE)
+			player.up = false;
 		break;
 	case GLFW_KEY_S:
-		if (action == GLFW_PRESS || action == GLFW_REPEAT)
-		{
+		if (action == GLFW_PRESS)
 			player.down = true;
-		}
+		if (action == GLFW_RELEASE)
+			player.down = false;
 		break;
 	case GLFW_KEY_ESCAPE:
 		if (action == GLFW_PRESS)
@@ -209,64 +209,45 @@ void deplacment(std::vector<std::vector<Bloc>>& map, double elapsedTime)
 		y = 1;	
 	//si x = 0, on ne se déplace pas latéralement, donc pos_joueur_x ne change pas
 	//en cas de diagonale, abs(y) = 1 (sinon 0) donc on se déplace seulement de rac(0,5) = 0,7 (deplacement² = 0,7² + 0,7²  pythagore)
-	pos_joueur_x += vitesse_joueur * elapsedTime * x;
-	if (x < 0)
+	pos_joueur_x += vitesse_joueur * elapsedTime * x * (std::abs(x) - std::abs(y) * 0.3);
+
+	if (pos_joueur_x < 0.5)
 	{
-		if (pos_joueur_x < 0.5)
-		{
-			pos_joueur_x = 0.5;
-		}
-		else if(map[(int)pos_joueur_y][(int)(pos_joueur_x - 0.5)].type == Mur)
-		{
-			pos_joueur_x = (int)pos_joueur_x + 0.5;
-		}
-		return;
+		pos_joueur_x = 0.5;
+	}
+	else if (pos_joueur_x > map.size() - 0.5)
+	{
+		pos_joueur_x = map.size() - 0.5;
+	}
+	else if(map[(int)pos_joueur_y][(int)(pos_joueur_x - 0.5)].type == Mur)
+	{
+		pos_joueur_x = (int)pos_joueur_x + 0.5;
+	}
+	else if(map[(int)pos_joueur_y][(int)(pos_joueur_x + 0.5)].type == Mur)
+	{
+		pos_joueur_x = (int)pos_joueur_x + 0.5;
 	}
 
-	if (x > 0)
+	pos_joueur_y += vitesse_joueur * elapsedTime * y * (std::abs(y) - std::abs(x) * 0.3);;
+
+	if (pos_joueur_y < 0.99)
 	{
-		if (pos_joueur_x > map.size() - 0.5)
-		{
-			pos_joueur_x = map.size() - 0.5;
-		}
-		else if(map[(int)pos_joueur_y][(int)(pos_joueur_x + 0.5)].type == Mur)
-		{
-			pos_joueur_x = (int)pos_joueur_x + 0.5;
-		}
-		return;
+		pos_joueur_y = 0.99;
+	}
+	else if (pos_joueur_y > map.size())
+	{
+		pos_joueur_y = map.size();
+	}
+	else if(map[(int)(pos_joueur_y - 1)][(int)pos_joueur_x].type == Mur)
+	{
+		pos_joueur_y = (int)pos_joueur_y + 0.99;
+	}
+	else if(map[(int)(pos_joueur_y)][(int)pos_joueur_x].type == Mur)
+	{
+		pos_joueur_y = (int)pos_joueur_y - 0.001;
 	}
 
-	pos_joueur_y += vitesse_joueur * elapsedTime * y;
-	if (y < 0)
-	{
-		if (pos_joueur_y < 0.5)
-		{
-			pos_joueur_y = 0.5;
-		}
-		else if(map[(int)(pos_joueur_y + 0.5)][(int)pos_joueur_x].type == Mur)
-		{
-			pos_joueur_x = (int)pos_joueur_x + 0.5;
-		}
-		return;
-	}
-
-	if (y > 0)
-	{
-		if (pos_joueur_y > map.size() - 0.5)
-		{
-			pos_joueur_y = map.size() - 0.5;
-		}
-		else if(map[(int)(pos_joueur_y - 0.5)][(int)pos_joueur_x].type == Mur)
-		{
-			pos_joueur_x = (int)pos_joueur_x - 0.5;
-		}
-		return;
-	}
 	// std::cout << pos_joueur_x << std::endl;
-	player.left = false;
-	player.right = false;
-	player.up = false;
-	player.down = false;
 }
 
 int draw(std::vector<std::vector<Bloc>>& map) {
@@ -326,6 +307,12 @@ int draw(std::vector<std::vector<Bloc>>& map) {
         
 		// render here
 		deplacment(map, elapsedTime);
+		handle_events(map, pos_joueur_x, pos_joueur_y);
+		if (gagne || perdu)
+		{
+			break;
+		}
+		
 		renderScene(map);
 
 		/* Swap front and back buffers */
@@ -342,6 +329,43 @@ int draw(std::vector<std::vector<Bloc>>& map) {
 			elapsedTime = glfwGetTime() - startTime;
 		}
 	}
+	if (gagne)
+	{
+		while (!glfwWindowShouldClose(window)) 
+		{
+			double startTime = glfwGetTime();
+			glClear(GL_COLOR_BUFFER_BIT);
+			// Teste la victoire ou la défaite (on change le paramètre pour tester)
+			displayEndScreen(Victoire); // ou Defaite
+
+			glfwSwapBuffers(window);
+			glfwPollEvents();
+			while(elapsedTime < FRAMERATE_IN_SECONDS)
+			{
+				glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS-elapsedTime);
+				elapsedTime = glfwGetTime() - startTime;
+			}
+		}
+	}
+	if (perdu)
+	{
+		while (!glfwWindowShouldClose(window)) 
+		{
+			double startTime = glfwGetTime();
+			glClear(GL_COLOR_BUFFER_BIT);
+			// Teste la victoire ou la défaite (on change le paramètre pour tester)
+			displayEndScreen(Defaite); // ou Defaite
+
+			glfwSwapBuffers(window);
+			glfwPollEvents();
+			while(elapsedTime < FRAMERATE_IN_SECONDS)
+			{
+				glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS-elapsedTime);
+				elapsedTime = glfwGetTime() - startTime;
+			}
+		}
+	}
+	
     glfwTerminate();
     return 0;
 }
