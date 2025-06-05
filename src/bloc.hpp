@@ -15,4 +15,5 @@ struct Bloc
     int directiony;
     bool trap;
     bool treasure;
+    bool graal;
 };
