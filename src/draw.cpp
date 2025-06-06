@@ -22,7 +22,7 @@ GLBI_Set_Of_Points axis;
 static const double FRAMERATE_IN_SECONDS = 1. / 60.;
 static float aspectRatio = 1.0f;
 /* Espace virtuel */
-static const float GL_VIEW_SIZE = 22.;
+static const float GL_VIEW_SIZE = 44.;
 float vitesse_joueur = 3;
 
 const int original_height = 800;
@@ -308,13 +308,13 @@ void mouvement_ennemi(std::vector<std::vector<Bloc>>& map, float elapsedTime)
 		pos = map[ennemi.first][ennemi.second];
 		if (pos.directionx != 0 && pos.directiony !=0)
 		{
-			ennemi.first += 0.5 * pos.directionx * vitesse_joueur * elapsedTime;
-			ennemi.second += 0.5 * pos.directiony * vitesse_joueur * elapsedTime;
+			ennemi.first += 0.5 * pos.directionx * vitesse_joueur * elapsedTime * 10;
+			ennemi.second += 0.5 * pos.directiony * vitesse_joueur * elapsedTime * 10;
 		}
 		else
 		{
-			ennemi.first += pos.directionx * vitesse_joueur * elapsedTime;
-			ennemi.second += pos.directiony* vitesse_joueur * elapsedTime;
+			ennemi.first += pos.directionx * vitesse_joueur * elapsedTime * 10;
+			ennemi.second += pos.directiony* vitesse_joueur * elapsedTime * 10;
 		}
 		if (ennemi.first < 0.5)
 		{
