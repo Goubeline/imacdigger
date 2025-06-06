@@ -22,7 +22,7 @@ GLBI_Set_Of_Points axis;
 static const double FRAMERATE_IN_SECONDS = 1. / 60.;
 static float aspectRatio = 1.0f;
 /* Espace virtuel */
-static const float GL_VIEW_SIZE = 44.;
+static const float GL_VIEW_SIZE = 22.;
 float vitesse_joueur = 3;
 
 const int original_height = 800;

@@ -275,6 +275,8 @@ std::array<bool,4> existences(std::vector<std::vector<Bloc>>& map,int x,int y){
 int define_texture (std::vector<std::vector<Bloc>>& map,int x,int y){
     int value{0};
     std::array<bool,4> existence = existences(map, x, y);
+    if (y <= 0 || y >= map.size() - 1 || x <= 0 || x >= map.size() - 1)
+        return 0;
     if (existence[0]){
         if (map[y+1][x].type == Vide){
             value+=8;
